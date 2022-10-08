@@ -2,8 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import "./Header.css";
 
+
 export const Header = () => {
     const [activeTab, setActiveTab] =  useState("Home");
+
+    const location = useLocation();
+    useEffect(() => {
+        if (location.pathname === "/") {
+            setActiveTab("Home");
+        } else if (location.pathname === "/add") {
+            setActiveTab("addUser");
+        } else if (location.pathname === "/about") {
+            setActiveTab("About");
+        }
+    }, [location]);
+    
     return (
         <div className='header'>
             <p className='logo'>User Management System</p>
