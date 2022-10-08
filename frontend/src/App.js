@@ -12,15 +12,15 @@ import Header from './components/Header';
 function App() {
   return (
     <div className="App">
-      <Header />
-        <ToastContainer />
+      <ToastContainer />
+      
         <Routes>
           <Route path="/"  element={<Home />} />
           <Route path="/addd" element={<AddEdit />} />
           <Route path="/update/:id" element={<AddEdit />} />
           <Route path="/view/:id" element={<View />} />
           {/* <Route path="/about" element={about} /> */}
-        </Routes>
+      </Routes>
       </div>
   );
 }
