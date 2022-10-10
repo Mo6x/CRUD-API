@@ -1,27 +1,31 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Routes } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { BrowserRouter,  Router } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import Header from './components/Header';
+import About from './components/pages/About';
 import AddEdit from './components/pages/AddEdit';
 import Home from './components/pages/Home';
 import View from './components/pages/View';
-import Header from './components/Header';
+
 
 
 function App() {
   return (
+    <BrowserRouter>
     <div className="App">
-      <ToastContainer />
+      <Header />
+        <ToastContainer position='to-center' />
       
-        <Routes>
-          <Route path="/"  element={<Home />} />
-          <Route path="/addd" element={<AddEdit />} />
-          <Route path="/update/:id" element={<AddEdit />} />
-          <Route path="/view/:id" element={<View />} />
-          {/* <Route path="/about" element={about} /> */}
-      </Routes>
+          <Router  path="/"  component={Home} />
+          <Router  path="/addd" component={AddEdit} />
+          <Router  path="/update/:id" component={AddEdit} />
+          <Router  path="/view/:id" component={View} />
+          <Router  path="/about" component={About} />  
+    
       </div>
+    </BrowserRouter >
   );
 }
 

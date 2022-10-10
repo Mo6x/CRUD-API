@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import './AddEdit.css';
+import { toast } from 'react-toastify';
 
 
 const initialState = {
@@ -13,18 +14,46 @@ const initialState = {
 
 export const AddEdit = () => {
     const [state, setState] = useState(initialState);
-
     const { name, email, contact } = initialState;
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const history = useNavigate();
+
+    const { id } = useParams();
+
+    useEffect(() => {
+        if (id) {
+            getSingleUser(id);
+        }
+    }, [id])
+
+    const getSingleUser = async (id) => {
+        const response = await axios.get(`http://localhost:5000/user/${id}`);
+        if (response.status === 200) {
+            setState({ ...response.data[0] });
+        }
     };
 
-    const handleInputChange = (e) => {
+     const handleInputChange = (e) => {
         let { name, value } = e.target;
         setState({ ...state, [name]: value });
     };
 
+    const addContact = async (data) => {
+        const response = await axios.post("http://localhost:5000/user", data);
+        if (response.status === 200) {
+            toast.success(response.data);
+          }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!name || !email || !contact) {
+            toast.error("Please provide value into each input field");
+        } else {
+            addContact(state);
+            setTimeout(() => history.push("/"), 500);
+        };
+    };
     return (
         <div style={{ marginTop: "100px" }}>
             <form style={{
@@ -62,6 +91,7 @@ export const AddEdit = () => {
                     onChange={handleInputChange}
                     value={contact}
                 /> 
+                <input type="submit" value="Add" />
             </form>
         </div>
     );
