@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter,  Router } from "react-router-dom";
+import { BrowserRouter,  Router, Routers} from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
@@ -17,13 +17,13 @@ function App() {
     <div className="App">
       <Header />
         <ToastContainer position='to-center' />
-      
-          <Router  path="/"  component={Home} />
-          <Router  path="/addd" component={AddEdit} />
-          <Router  path="/update/:id" component={AddEdit} />
-          <Router  path="/view/:id" component={View} />
-          <Router  path="/about" component={About} />  
-    
+         <Router>
+          <Routers  path="/"  component={<Home />} />
+          <Routers  path="/addd" component={<AddEdit />} />
+          <Routers  path="/update/:id" component={<AddEdit />} />
+          <Routers  path="/view/:id" component={<View />} />
+          <Routers  path="/about" component={<About />} />  
+        </Router>
       </div>
     </BrowserRouter >
   );
