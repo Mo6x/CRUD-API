@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
 import './AddEdit.css';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 
 const initialState = {
@@ -38,19 +38,33 @@ export const AddEdit = () => {
         setState({ ...state, [name]: value });
     };
 
-    const addContact = async (data) => {
+    const addUser = async (data) => {
         const response = await axios.post("http://localhost:5000/user", data);
         if (response.status === 200) {
             toast.success(response.data);
           }
     };
 
+
+
+    const updateUser = async (data, id) => {
+        const response = await axios.put(`http://localhost:5000/user$(id)`, data);
+        if (response.status === 200) {
+            toast.success(response.data);
+        }
+    };
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!name || !email || !contact) {
             toast.error("Please provide value into each input field");
         } else {
-            addContact(state);
+            if (id) {
+                addUser(state);  
+            } else {
+                updateUser(state, id);
+            }
             setTimeout(() => history.push("/"), 500);
         };
     };
